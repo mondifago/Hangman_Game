@@ -31,45 +31,70 @@ class Program
             "geelong"
         };
 
-
+        const int MAX_NUM_OF_TRIES = 6;
+        string correctlyGuessedChar = "";
         Random rng = new Random();
         int randomIndex = rng.Next(0, wordPool.Count);
         string selectedWord = wordPool[randomIndex];
-
-        Console.WriteLine("-----------------------------------This is Hangmans Game----------------------------------------\n");
+       
+        Console.WriteLine("-----------------------------------Welcome to Hangmans Game----------------------------------------\n");
         Console.WriteLine("One of Melbourne's suburbs has been picked at random. you are to guess an alphabet that is part");
         Console.WriteLine("of the spelling of this suburb one after the other until you completely spell the surburb.");
-        Console.WriteLine("In the case of a wrong guess, you have 6 retries, after which you loose the game.");
+        Console.WriteLine($"In the case of a wrong guess, you have {MAX_NUM_OF_TRIES} retries, after which you loose the game.");
 
-
-        Console.WriteLine("Guess your alphabet: \n");
-        char userInput = Convert.ToChar (Console.ReadLine());
-        Console.WriteLine("\n");
-        char hiddenChar = '_';
-
-
-        if (selectedWord.Contains(userInput))
+        for (int i = 0; i <= selectedWord.Length+2; i++)
         {
-            foreach (char c in selectedWord)
+            if (correctlyGuessedChar.Length == selectedWord.Length)
             {
-                if (c == userInput)
+                Console.WriteLine("Congratulations! You've guessed all characters.");
+                Console.WriteLine($"The full word is: {selectedWord}");
+                break;
+            }
+
+            Console.WriteLine("Guess your alphabet: \n");
+            char userInput = Console.ReadLine()[0];
+            Console.WriteLine("\n");
+            char hiddenChar = '_';
+
+            if (selectedWord.Contains(userInput))
+            {
+                foreach (char c in selectedWord)
                 {
-                    Console.Write(c + " ");
+                    if (c == userInput)
+                    {
+                        Console.Write(c + " ");
+                    }
+                    else
+                    {
+                        Console.Write(hiddenChar + " ");
+                    }
                 }
-                else
+                correctlyGuessedChar += userInput;
+            }
+
+            if (!selectedWord.Contains(userInput))
+            {
+                foreach (char c in selectedWord)
                 {
                     Console.Write(hiddenChar + " ");
                 }
-                
-            }
 
+                Console.WriteLine("\n");
+
+                if (i < MAX_NUM_OF_TRIES - 1)
+                {
+                    Console.WriteLine($"You have {MAX_NUM_OF_TRIES - (i + 1)} tries left.");
+                }
+                else
+                {
+                    Console.WriteLine("Maximum number of tries reached. GAME OVER!");
+                }
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            Console.Clear();
         }
-        else
-            foreach (char c in selectedWord)
-            {
-                Console.Write(hiddenChar + " ");
-            }
-
 
     }
 }
