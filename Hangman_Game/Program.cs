@@ -38,7 +38,7 @@ class Program
         //selectedWord = "test me"; //FOR TESTING ONLY 
         string correctlyGuessedChar = "";
         char[] updatedCorrectlyGuessed = new char[selectedWord.Length];
-        
+        char userInput = 'x';
         Console.WriteLine("-----------------------------------Welcome to Hangmans Game----------------------------------------\n");
         Console.WriteLine("One of Melbourne's suburbs has been picked at random. you are to guess an alphabet that is part");
         Console.WriteLine("of the spelling of this suburb one after the other until you completely spell the surburb.");
@@ -54,7 +54,21 @@ class Program
         while (maxNumOfTries>0)
         {
             Console.WriteLine($"\n\nGuess your alphabet: \n");
-            char userInput = Console.ReadLine()[0];
+
+            try
+            {
+                userInput = Console.ReadLine()[0];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("Error: choose a letter before pressing enter key");
+                continue;
+            }
+            if (!char.IsLetter(userInput) && userInput != ' ') 
+            {
+                Console.WriteLine("Invalid input. Please enter only letters and space.");
+                continue;
+            }
             Console.WriteLine("\n");
 
             if (selectedWord.Contains(userInput))
@@ -73,6 +87,7 @@ class Program
                         allGuessed = false;
                     }
                 }
+              
                 foreach (char c in selectedWord)
                 {
                     bool isGuessed = false;
@@ -110,6 +125,7 @@ class Program
             {
                 maxNumOfTries--;
                 Console.WriteLine("\n");
+
                 if (maxNumOfTries <6)
                 {
                     Console.WriteLine($"WRONG GUESS! You have {maxNumOfTries} tries left.");
