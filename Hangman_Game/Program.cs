@@ -116,7 +116,7 @@ class Program
 
             if (correctlyGuessedChar == selectedWord)
             {
-                Console.WriteLine("Congratulations! You've guessed all characters.");
+                Console.WriteLine("\n\nCongratulations! You've guessed all characters.");
                 Console.WriteLine($"The full word is: {selectedWord}");
                 break;
             }
@@ -129,7 +129,41 @@ class Program
                 if (maxNumOfTries <6)
                 {
                     Console.WriteLine($"WRONG GUESS! You have {maxNumOfTries} tries left.");
+                    Console.WriteLine($"Press R to see correctly guessed letters again or press ENTER to contiune");
+                    ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+                    if (keyInfo.Key == ConsoleKey.R)
+                    {
+                        Console.Clear();
+                        foreach (char c in selectedWord)
+                        {
+                            bool isGuessed = false;
+                            for (int i = 0; i < updatedCorrectlyGuessed.Length; i++)
+                            {
+                                if (c == updatedCorrectlyGuessed[i])
+                                {
+                                    isGuessed = true;
+                                    break;
+                                }
+                            }
+                            if (isGuessed)
+                            {
+                                Console.Write(c + " ");
+                            }
+                            else
+                            {
+                                Console.Write(hiddenChar + " ");
+                            }
+                        }
+                        continue;
+                    }
+                    if (keyInfo.Key == ConsoleKey.Enter)
+                    {
+                        Console.Clear();
+                        continue;
+                    }
                 }
+
                 if (maxNumOfTries==0)
                 {
                     Console.WriteLine("Maximum number of tries reached. GAME OVER!");
