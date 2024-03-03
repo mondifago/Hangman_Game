@@ -30,8 +30,9 @@ class Program
             "bacchus marsh",
             "geelong"
         };
+        const char SPACE_BTW_WORDS = ' ';
+        const char HIDDEN_CHAR = '_';
         int maxNumOfTries = 6;
-        char hiddenChar = '_';
         Random rng = new Random();
         int randomIndex = rng.Next(0, wordPool.Count);
         string selectedWord = wordPool[randomIndex];
@@ -39,6 +40,7 @@ class Program
         string correctlyGuessedChar = "";
         char[] updatedCorrectlyGuessed = new char[selectedWord.Length];
         char userInput = 'x';
+
         Console.WriteLine("-----------------------------------Welcome to Hangmans Game----------------------------------------\n");
         Console.WriteLine("One of Melbourne's suburbs has been picked at random. you are to guess an alphabet that is part");
         Console.WriteLine("of the spelling of this suburb one after the other until you completely spell the surburb.");
@@ -47,8 +49,8 @@ class Program
         //todo: before starting the game, update all spaces in updatedCorrectlyGuessed with the actual spaces
         for(int i = 0; i < selectedWord.Length; i++)
         {
-            if (selectedWord[i] == ' ')
-                updatedCorrectlyGuessed[i] = ' ';
+            if (selectedWord[i] == SPACE_BTW_WORDS)
+                updatedCorrectlyGuessed[i] = SPACE_BTW_WORDS;
         }
 
         while (maxNumOfTries>0)
@@ -64,7 +66,7 @@ class Program
                 Console.WriteLine("Error: choose a letter before pressing enter key");
                 continue;
             }
-            if (!char.IsLetter(userInput) && userInput != ' ') 
+            if (!char.IsLetter(userInput) && userInput != SPACE_BTW_WORDS) 
             {
                 Console.WriteLine("Invalid input. Please enter only letters and space.");
                 continue;
@@ -82,7 +84,7 @@ class Program
                     {
                         updatedCorrectlyGuessed[i] = userInput;
                     }
-                    if (updatedCorrectlyGuessed[i] == hiddenChar)
+                    if (updatedCorrectlyGuessed[i] == HIDDEN_CHAR)
                     {
                         allGuessed = false;
                     }
@@ -105,7 +107,7 @@ class Program
                     }
                     else
                     {
-                        Console.Write(hiddenChar + " ");
+                        Console.Write(HIDDEN_CHAR + " ");
                     }
                 }
                 if (allGuessed)
@@ -126,6 +128,11 @@ class Program
                 maxNumOfTries--;
                 Console.WriteLine("\n");
 
+                if (maxNumOfTries == 0)
+                {
+                    Console.WriteLine("Maximum number of tries reached. GAME OVER!");
+                    return;
+                }
                 if (maxNumOfTries <6)
                 {
                     Console.WriteLine($"WRONG GUESS! You have {maxNumOfTries} tries left.");
@@ -152,7 +159,7 @@ class Program
                             }
                             else
                             {
-                                Console.Write(hiddenChar + " ");
+                                Console.Write(HIDDEN_CHAR + " ");
                             }
                         }
                         continue;
@@ -162,13 +169,7 @@ class Program
                         Console.Clear();
                         continue;
                     }
-                }
-
-                if (maxNumOfTries==0)
-                {
-                    Console.WriteLine("Maximum number of tries reached. GAME OVER!");
-                    return;
-                }
+                } 
             }
             Console.WriteLine("\n");
             Console.WriteLine("Press any key to continue...");
