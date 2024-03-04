@@ -30,16 +30,18 @@ class Program
             "bacchus marsh",
             "geelong"
         };
+        const int NUMBER_OF_TRIES_FINISHED = 0;
+        const int INITIAL_MAX_NUMBER_OF_TRIES = 6;
         const char SPACE_BTW_WORDS = ' ';
         const char HIDDEN_CHAR = '_';
-        int maxNumOfTries = 6;
+        int maxNumOfTries = INITIAL_MAX_NUMBER_OF_TRIES;
         Random rng = new Random();
         int randomIndex = rng.Next(0, wordPool.Count);
         string selectedWord = wordPool[randomIndex];
         //selectedWord = "test me"; //FOR TESTING ONLY 
         string correctlyGuessedChar = "";
         char[] updatedCorrectlyGuessed = new char[selectedWord.Length];
-        char userInput = 'x';
+        char userInput ;
 
         Console.WriteLine("-----------------------------------Welcome to Hangmans Game----------------------------------------\n");
         Console.WriteLine("One of Melbourne's suburbs has been picked at random. you are to guess an alphabet that is part");
@@ -53,7 +55,7 @@ class Program
                 updatedCorrectlyGuessed[i] = SPACE_BTW_WORDS;
         }
 
-        while (maxNumOfTries>0)
+        while (maxNumOfTries>NUMBER_OF_TRIES_FINISHED)
         {
             Console.WriteLine($"\n\nGuess your alphabet: \n");
 
@@ -128,12 +130,12 @@ class Program
                 maxNumOfTries--;
                 Console.WriteLine("\n");
 
-                if (maxNumOfTries == 0)
+                if (maxNumOfTries == NUMBER_OF_TRIES_FINISHED)
                 {
                     Console.WriteLine("Maximum number of tries reached. GAME OVER!");
                     return;
                 }
-                if (maxNumOfTries <6)
+                if (maxNumOfTries <INITIAL_MAX_NUMBER_OF_TRIES)
                 {
                     Console.WriteLine($"WRONG GUESS! You have {maxNumOfTries} tries left.");
                     Console.WriteLine($"Press R to see correctly guessed letters again or press ENTER to contiune");
